@@ -1,0 +1,55 @@
+INSTALACIÓN JELLYFIN CON DOCKER
+
+
+
+1era Parte: Instalación de Docker
+
+- Para comenzar, instalaremos docker en nuestros servidor fisico con 
+sudo apt update && sudo apt upgrade -y
+
+
+- Seguidamente instalaremos las dependencias necesarias para instalar docker 
+sudo apt install -y ca-certificates curl gnupg
+
+
+- Añadiremos las claves oficiales de Docker para la instalacion
+sudo install -m 0755 -d /etc/apt/keyrings curl -fsSL 
+https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o 
+/etc/apt/keyrings/docker.gpg sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+
+- Configuraremos el repositorio con este comando 
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+
+- Por último, instalaremos Docker.
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+
+
+2nda Parte: Instalación de Jellyfin
+
+- Para empezar crearemos la estructura básica donde queremos instalar jellyfin con docker
+mkdir -p /root/jellyfin/config /root/jellyfin/cache /root/jellyfin/media
+cd /root/jellyfin
+
+- Crearemos el archivo docker composte, es decir, el contenedor
+nano docker-compose.yml
+- Y dentro de este archivo pegaremos lo siguiente:
+services:
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    network_mode: host
+    volumes:
+      - ./config:/config
+      - ./cache:/cache
+      - ./media:/data
+  restart: 'unless-stopped'
+
+
+- Por último lanzaremos nuestro contenedor para que se ponga en marcha la instalación de jellyfin.
+docker compose up -d
+
+
+
