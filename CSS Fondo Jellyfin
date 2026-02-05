@@ -1,0 +1,55 @@
+/* 1. BORRAR LO MARCADO EN ROJO (Logo de Jellyfin y textos de ayuda) */
+.headerLogo, 
+.view-dashboard .pageTitle, 
+.aboutPage,
+.footerText {
+    display: none !important;
+}
+
+/* 2. AÑADIR EL TÍTULO "ONLYUSES" EN LA BARRA SUPERIOR */
+.headerLeft::after {
+    content: "OnlyUses";
+    font-weight: 800;
+    font-size: 1.6em;
+    color: #ff3c3c; /* Un rojo más vivo para el texto */
+    margin-left: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* 3. FONDO "LLAMATIVO PERO CÓMODO" (Graduado Radial) */
+/* Crea un efecto de foco de luz roja en el centro que se funde a negro */
+.backgroundContainer, .view, .page, html {
+    background: radial-gradient(circle, rgba(100,0,0,1) 0%, rgba(10,10,10,1) 100%) !important;
+    background-attachment: fixed !important;
+}
+
+/* 4. MEJORAR LAS TARJETAS (Efecto cristal flotante) */
+.cardBox {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(255, 60, 60, 0.1);
+    border-radius: 10px;
+    backdrop-filter: blur(5px); /* Efecto cristalino */
+}
+
+.cardBox:hover {
+    border: 1px solid #ff3c3c;
+    box-shadow: 0 0 15px rgba(255, 60, 60, 0.4);
+    transform: translateY(-5px);
+}
+
+/* 5. BOTONES Y ACENTOS EN ROJO ONLYUSES */
+:root {
+    --theme-primary-color: #ff3c3c;
+    --theme-accent-color: #ff0000;
+}
+
+.button-submit, .playbutton, .fab {
+    background-color: #ff3c3c !important;
+}
+
+/* 6. QUITAR EL FONDO NEGRO DE LA BARRA SUPERIOR PARA QUE SE VEA EL GRADUADO */
+.skinHeader {
+    background: rgba(0,0,0,0.3) !important;
+    backdrop-filter: blur(10px);
+}
