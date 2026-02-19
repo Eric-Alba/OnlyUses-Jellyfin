@@ -23,7 +23,7 @@ Para comenzar, dirígete a la parte superior derecha de la interfaz de Jellyfin 
 
 **
 
-![[Pasted image 20260219154749.png]]
+<img width="1919" height="941" alt="Pasted image 20260219154749" src="https://github.com/user-attachments/assets/dfb3f994-611d-468c-9ae8-d030efc1ea6e" />
 
 **
 
@@ -33,7 +33,8 @@ Dentro del menú desplegable, selecciona la opción **Panel de Control**. Nota: 
 
 **
 
-![[Pasted image 20260219154931.png]]
+<img width="722" height="669" alt="Pasted image 20260219154931" src="https://github.com/user-attachments/assets/2e66a98d-9372-44a8-9676-96015b60a694" />
+
 
 **
 
@@ -43,7 +44,8 @@ En la barra lateral izquierda del Panel de Control, busca y selecciona el aparta
 
 **
 
-![[Pasted image 20260219155722.png]]
+<img width="611" height="910" alt="Pasted image 20260219155722" src="https://github.com/user-attachments/assets/0405b0e5-bb6f-4ef2-a84c-0423ba7ba669" />
+
 
 
 **
@@ -60,7 +62,8 @@ Una vez dentro del menú de Apariencia, desplázate hasta la parte inferior dond
 
 **
 
-![[Pasted image 20260219155857.png]]
+<img width="669" height="591" alt="Pasted image 20260219155857" src="https://github.com/user-attachments/assets/5b7a1afe-9fc6-48b8-992c-5f2acde72c9b" />
+
 
 
 **
