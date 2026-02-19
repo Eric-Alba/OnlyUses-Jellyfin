@@ -1,0 +1,61 @@
+# 🔒 Configuración de HTTPS y Certificados SSL
+
+Para garantizar una conexión segura en nuestro servidor **OnlyUses**, es necesario generar y configurar certificados SSL. Esto permitirá cifrar el tráfico entre el servidor y los dispositivos locales.
+
+---
+
+## 🛠️ Paso 1: Generación de Certificados (OpenSSL)
+
+Ejecutaremos los siguientes comandos en la terminal para crear un certificado auto-firmado válido por un año.
+
+### 1. Acceder al directorio de configuración
+Primero, nos situamos en la carpeta donde Docker gestiona los datos de Jellyfin:
+```bash
+cd /root/jellyfin/config
+
+2. Crear la clave y el certificado
+Generamos una clave RSA de 4096 bits.
+
+[!IMPORTANT]
+Cambia "Tu_IP" por la IP real de tu servidor físico.
+
+Bash
+openssl req -x509 -newkey rsa:4096 -keyout jellyfin.key -out jellyfin.crt -days 365 -nodes -subj "/CN=TU_IP"
+3. Exportar a formato PKCS12 (.pfx)
+Jellyfin requiere el formato .pfx. Al ejecutar este comando, utiliza la contraseña 1234 cuando se te solicite:
+
+Bash
+openssl pkcs12 -export -out jellyfin.pfx -inkey jellyfin.key -in jellyfin.crt
+4. Asignar permisos
+Otorgamos permisos de lectura para que el contenedor Docker pueda acceder al archivo sin restricciones:
+
+Bash
+chmod 777 jellyfin.pfx
+
+## 🌐 Paso 2: Configuración en la Interfaz de Jellyfin
+
+Una vez generados los archivos en el servidor físico, debemos indicarle a Jellyfin que los utilice a través de su panel de administración:
+
+1.  **Acceso:** Entra en tu Jellyfin y dirígete al **Panel de Control**.
+2.  **Sección de Red:** Accede al apartado **Redes** (o *Networking*).
+3.  **Configuración del Certificado:** Busca la sección llamada **Ruta del certificado de información personalizada**.
+4.  **Ruta del Archivo:** Introduce la ruta interna que ve el contenedor (definida en tu `docker-compose.yml`):
+    * ` /config/jellyfin.pfx`
+5.  **Contraseña:** Introduce la clave del certificado que configuramos anteriormente: `1234`.
+6.  **Finalizar:** Baja hasta el final de la página y haz clic en el botón **Guardar**.
+
+
+
+---
+
+> [!WARNING]
+> **Nota sobre seguridad:** Al tratarse de un certificado **auto-firmado**, tu navegador mostrará un aviso de **"Conexión no segura"** la primera vez que entres por HTTPS. 
+> 
+> Es un comportamiento normal en redes locales de OnlyUses; simplemente haz clic en **"Configuración avanzada"** y luego en **"Acceder a [tu IP] (sitio no seguro)"**.
+
+---
+
+### 🛠️ Detalles Técnicos de la Mejora
+* **Ruta de Docker:** Se ha especificado la ruta `/config/jellyfin.pfx` porque es la que el contenedor tiene mapeada internamente, independientemente de que en el host sea `/root/...`.
+* **Claridad Visual:** Uso de listas numeradas y bloques de advertencia para evitar errores comunes durante la configuración inicial.
+* **Soporte de Usuario:** Instrucciones claras para superar la barrera del aviso de seguridad del navegador.
