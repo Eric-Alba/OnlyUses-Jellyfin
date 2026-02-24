@@ -1,14 +1,17 @@
 # Protección de WordPress contra Fuerza Bruta
 
-Este documento describe la configuración de seguridad básica en WordPress usando **WPS Hide Login** y **Wordfence Security** para proteger el panel de administración frente a ataques automatizados.
+Este documento describe la configuración de seguridad básica en WordPress usando **WPS Hide Login** y **Wordfence Security** para proteger 
+el panel de administración frente a ataques automatizados.
 
 ---
 
 ## WPS Hide Login
 
-WPS Hide Login permite cambiar la URL de acceso al panel de WordPress. Por defecto WordPress utiliza `/wp-login.php`, `/wp-admin` y `/admin`, rutas que son conocidas por bots para ataques de fuerza bruta.
+WPS Hide Login permite cambiar la URL de acceso al panel de WordPress. Por defecto WordPress utiliza `/wp-login.php`, `/wp-admin` y `/admin`, 
+rutas que son conocidas por bots para ataques de fuerza bruta.
 
-Con WPS Hide Login se define una URL personalizada, por ejemplo `/acceso-seguro`. Las rutas por defecto devuelven error 404, ocultando efectivamente el panel de administración y reduciendo la exposición a intentos de intrusión.
+Con WPS Hide Login se define una URL personalizada, por ejemplo `/acceso-seguro`. Las rutas por defecto devuelven error 404, 
+ocultando efectivamente el panel de administración y reduciendo la exposición a intentos de intrusión.
 
 **Resultado:**
 
@@ -44,4 +47,5 @@ Wordfence complementa WPS Hide Login, protegiendo la URL personalizada y bloquea
 
 **Conclusión:**
 
-La combinación de WPS Hide Login y Wordfence Security proporciona una protección sólida contra ataques automatizados. WPS Hide Login oculta la puerta de entrada, y Wordfence la protege activamente mediante firewall, bloqueos y 2FA, aumentando la seguridad general del sitio.
+La combinación de WPS Hide Login y Wordfence Security proporciona una protección sólida contra ataques automatizados. 
+WPS Hide Login oculta la puerta de entrada, y Wordfence la protege activamente mediante firewall, bloqueos y 2FA, aumentando la seguridad general del sitio.
