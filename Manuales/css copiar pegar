@@ -1,12 +1,10 @@
-🎨 Personalización de Interfaces Web
-Además de las opciones mencionadas, también puedes obtener interfaces web y temas personalizados desde este repositorio de GitHub:
+### 🎨 Personalización de Interfaces Web
 
-👉 Awesome Jellyfin - Themes
+También es posible obtener interfaces web y temas visuales directamente desde este repositorio especializado:
 
-En este enlace encontrarás una lista curada de:
+👉 **[Awesome Jellyfin - Themes](https://github.com/awesome-jellyfin/awesome-jellyfin/blob/main/THEMES.md)**
 
-Temas CSS: Para cambiar por completo el aspecto visual de tu servidor.
-
-Interfaces alternativas: Modificaciones para mejorar la experiencia de usuario.
-
-Skin Managers: Herramientas para gestionar y aplicar estilos de forma más sencilla.
+En este recurso encontrarás:
+* **Temas CSS:** Estilos listos para aplicar y cambiar la estética de tu servidor.
+* **Modificaciones de Interfaz:** Ajustes específicos para mejorar la navegación.
+* **Guías de instalación:** Instrucciones para implementar los cambios de forma segura.
