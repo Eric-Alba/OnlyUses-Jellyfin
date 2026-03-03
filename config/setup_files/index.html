@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnlyUses - Registro</title>
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+        /* Texto de fondo OnlyUses */
+        body::before {
+            content: "ONLYUSES";
+            position: absolute;
+            font-size: 15vw;
+            font-weight: 900;
+            color: rgba(255, 0, 0, 0.05);
+            z-index: -1;
+            white-space: nowrap;
+        }
+        .container {
+            background-color: #141414;
+            padding: 40px;
+            border-radius: 10px;
+            border: 2px solid #ff0000;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+            width: 350px;
+            text-align: center;
+        }
+        h2 { color: #ff0000; text-transform: uppercase; letter-spacing: 2px; }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #222;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input:focus { border-color: #ff0000; outline: none; }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+        button:hover { background: #b30000; box-shadow: 0 0 10px #ff0000; }
+        #message { margin-top: 15px; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>OnlyUses</h2>
+        <p>Registro de Usuario</p>
+        <input type="text" id="user" placeholder="Usuario">
+        <input type="password" id="pass" placeholder="Contraseña">
+        <input type="email" id="email" placeholder="Email (Opcional)">
+        <button onclick="register()">Crear Cuenta</button>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        async function register() {
+            const user = document.getElementById('user').value;
+            const pass = document.getElementById('pass').value;
+            const email = document.getElementById('email').value;
+            const msgDiv = document.getElementById('message');
+
+            msgDiv.innerText = "Procesando...";
+            
+            try {
+                const response = await fetch(`/register?username=${user}&password=${pass}&email=${email}`, { method: 'POST' });
+                const data = await response.json();
+                if (data.message) {
+                    msgDiv.style.color = "#00ff00";
+                    msgDiv.innerText = data.message;
+                } else {
+                    msgDiv.style.color = "#ff0000";
+                    msgDiv.innerText = "Error: " + (data.error || "Fallo desconocido");
+                }
+            } catch (e) {
+                msgDiv.innerText = "Error de conexión";
+            }
+        }
+    </script>
+</body>
+</html>
