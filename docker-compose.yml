@@ -1,0 +1,31 @@
+services:
+  db:
+    image: mariadb:latest
+    container_name: jellyfin-mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password_segura
+      MYSQL_DATABASE: jellyfin_portal
+      MYSQL_USER: admin_user
+      MYSQL_PASSWORD: Naipeer1234
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+
+  adminer:
+    image: adminer:latest
+    container_name: jellyfin-adminer
+    ports:
+      - 8080:8080
+
+  app:
+    image: tiangolo/uvicorn-gunicorn-fastapi:python3.9
+    container_name: jellyfin-app
+    volumes:
+      - ./app:/app
+    ports:
+      - 8000:80
+    depends_on:
+      - db
+    environment:
+      - DATABASE_HOST=db
+    command: /bin/sh -c "pip install mariadb requests && /start.sh"
