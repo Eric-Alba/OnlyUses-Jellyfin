@@ -1,0 +1,96 @@
+📄 1. El Corazón de la App (main.py)
+Este archivo gestiona el formulario, guarda en Adminer y crea el usuario en Jellyfin.
+
+Python
+from fastapi import FastAPI, Form
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+import mysql.connector
+import requests
+import urllib3
+
+# Silencia avisos de seguridad por el certificado auto-firmado
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# CONFIGURACIÓN
+DB_CONFIG = {
+    "host": "db", 
+    "user": "jellyfin_user", 
+    "password": "jellyfin_password", 
+    "database": "jellyfin_db"
+}
+JELLYFIN_URL = "https://10.1.100.11:8920" 
+API_KEY = "6f178f9a7dc94f09a18b6acc8b3690c4"
+
+@app.get("/", response_class=HTMLResponse)
+async def read_index():
+    with open("static/index.html", "r", encoding="utf-8") as f:
+        return f.read()
+
+@app.post("/register")
+async def register(username: str = Form(...), password: str = Form(...), email: str = Form(None)):
+    try:
+        # 1. Crear usuario en Jellyfin (verify=False para saltar error SSL)
+        jf_headers = {"X-Emby-Token": API_KEY}
+        jf_data = {"Name": username, "Password": password}
+        response = requests.post(f"{JELLYFIN_URL}/Users/New", json=jf_data, headers=jf_headers, verify=False)
+        
+        if response.status_code != 200:
+            return {"error": "Jellyfin rechazó el registro", "detalle": response.text}
+
+        # 2. Guardar en MariaDB (Adminer)
+        conn = mysql.connector.connect(**DB_CONFIG)
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO users (username, password_hash, email) VALUES (%s, %s, %s)", 
+                       (username, password, email))
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+        return HTMLResponse(content=f"<body style='background:#000;color:#fff;text-align:center;padding-top:100px;font-family:sans-serif;'><h1 style='color:#ff0000;'>¡BIENVENIDO A ONLYUSES, {username}!</h1><p>Cuenta activa. Ya puedes entrar en Jellyfin.</p><a href='http://10.1.100.11:8096' style='color:#ff0000;text-decoration:none;font-weight:bold;'>IR AL CINE</a></body>")
+    
+    except Exception as e:
+        return {"error": str(e)}
+📦 2. El Orquestador (docker-compose.yml)
+Este archivo levanta los tres servicios a la vez.
+
+YAML
+services:
+  db:
+    image: mariadb:latest
+    container_name: ellyfin-mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: jellyfin_db
+      MYSQL_USER: jellyfin_user
+      MYSQL_PASSWORD: jellyfin_password
+    ports:
+      - "3306:3306"
+
+  adminer:
+    image: adminer:latest
+    container_name: ellyfin-adminer
+    restart: always
+    ports:
+      - "8080:8080"
+
+  app:
+    build: ./app
+    container_name: ellyfin-app
+    restart: always
+    ports:
+      - "8000:80"
+    depends_on:
+      - db
+🛠️ 3. Instrucciones de "Resurrección"
+Si alguna vez se rompe algo, solo tienes que hacer esto:
+
+Asegúrate de que requirements.txt tenga: fastapi, uvicorn, mysql-connector-python, python-multipart y requests.
+
+Ejecuta: docker compose up -d --build.
+
+Si la tabla no aparece en Adminer, usa el comando CREATE TABLE que te pasé antes.
