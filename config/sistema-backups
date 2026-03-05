@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# ==============================================================================
+# SCRIPT DE BACKUP AUTOMÁTICO - ONLYUSES
+# ==============================================================================
+# Este script realiza una copia de seguridad de la DB de usuarios, el código web
+# y la configuración de Jellyfin, subiéndolo todo a la nube mediante Rclone.
+# ==============================================================================
+
+# 1. CONFIGURACIÓN DE RUTAS (Genéricas para GitHub)
+FECHA=$(date +"%d-%m-%Y_%H-%M")
+BACKUP_DIR="$HOME/proyecto/backups"
+PROYECTO_DIR="$HOME/proyecto"
+# Sustituye 'mi-nube-remota' por el nombre de tu configuración en Rclone
+REMOTO="mi-nube-remota:Backups_OnlyUses/$FECHA"
+
+mkdir -p $BACKUP_DIR
+
+echo "--- Iniciando Backup Total: $FECHA ---"
+
+# 2. BACKUP DE BASE DE DATOS (MariaDB)
+# Se extrae el volcado de la base de datos del contenedor Docker
+docker exec ellyfin-mariadb mysqldump -u [USUARIO_DB] -p[PASSWORD_DB] [NOMBRE_DB] > $BACKUP_DIR/db_usuarios.sql
+
+# 3. BACKUP DEL CÓDIGO FUENTE DE LA APP
+tar -czf $BACKUP_DIR/codigo_web.tar.gz -C $PROYECTO_DIR app
+
+# 4. BACKUP DE CONFIGURACIÓN DE JELLYFIN
+# Se guardan metadatos y ajustes (sin incluir archivos multimedia pesados)
+tar -czf $BACKUP_DIR/jellyfin_config.tar.gz /ruta/a/jellyfin/config 2>/dev/null || echo "Aviso: No se pudo comprimir la config"
+
+# 5. SINCRONIZACIÓN CON LA NUBE (Rclone)
+rclone copy $BACKUP_DIR $REMOTO
+
+# 6. LIMPIEZA DE ARCHIVOS LOCALES
+# Borramos los temporales para no saturar el disco del servidor
+rm -rf $BACKUP_DIR/*
+
+# 7. POLÍTICA DE RETENCIÓN (7 DÍAS)
+# Borra automáticamente los backups más antiguos de una semana en la nube
+rclone delete mi-nube-remota:Backups_OnlyUses --min-age 7d --rmdirs
+
+echo "--- Backup completado y limpieza realizada ---"
