@@ -66,7 +66,8 @@ Para lograr que Jellyfin corra en pocos recursos:
 ## 👥 Mantenedores
 
 Mantenido con ❤️ por:
-* **Eric-Alba** - [GitHub Profile](https://github.com/tu-usuario)
-* **Luis-Elena** - [GitHub Profile](https://github.com/usuario-luis)
+* **Eric-Alba** - [GitHub Profile](https://github.com/Eric-Alba)
+* **Luis-Elena** - [GitHub Profile](https://github.com/luiselenaruiz)
 
 ---
+
