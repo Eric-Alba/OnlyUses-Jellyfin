@@ -38,10 +38,10 @@ Para mantener el orden en este servidor, hemos dividido el proyecto en las sigui
 
 * **app/**: Código fuente del portal web de registro de usuarios.
 * **mysql_data/**: Persistencia de datos para la gestión de usuarios.
-* **📖 [Manuales/](./Manuales):** Guías paso a paso para la instalación del sistema base y Jellyfin.
-* **📖 [Manuales-web/](./Manuales-web):** Documentación específica para el despliegue del portal web.
-* **⚙️ [Config/](./Config):** Archivos de configuración, incluyendo filtros de **Fail2Ban** y reglas de **UFW**.
-* **🛠️ [Scripts/](./Scripts):** Automatizaciones para backups diarios (05:00 AM) y mantenimiento del sistema.
+* **📖 [Manuales/](./manuales):** Guías paso a paso para la instalación del sistema base y Jellyfin.
+* **📖 [Manuales-web/](./manuales-web):** Documentación específica para el despliegue del portal web.
+* **⚙️ [Config/](./config):** Archivos de configuración, incluyendo filtros de **Fail2Ban** y reglas de **UFW**.
+* **🛠️ [Scripts/](./scripts):** Automatizaciones para backups diarios (05:00 AM) y mantenimiento del sistema.
 
 ---
 
