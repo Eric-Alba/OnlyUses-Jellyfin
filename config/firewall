@@ -1,0 +1,17 @@
+#!/bin/bash
+# Script de configuración de seguridad para el servidor Jellyfin
+# Autor: naipeer
+
+echo "🛡️ Configurando Firewall UFW..."
+
+# Puertos necesarios
+ports=(22 80 443 8096)
+
+for port in "${ports[@]}"; do
+    ufw allow "$port"/tcp
+    echo "✅ Puerto $port abierto."
+done
+
+ufw --force enable
+ufw status verbose
+echo "🚀 Firewall activo y protegiendo el servidor."
