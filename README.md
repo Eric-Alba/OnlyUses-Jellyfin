@@ -58,7 +58,7 @@ El sistema está optimizado para responder rápidamente a las consultas y manten
 El contenido se organiza en diferentes secciones: **películas, series y música**. Gracias a Jellyfin, cada categoría puede manejarse con metadatos, carátulas y descripciones, facilitando la navegación, la búsqueda y la exploración de la comunidad multimedia.
 
 * **💾 Seguridad y Resiliencia**
-Protegemos los datos del sistema mediante **backups automáticos** programados. Cada noche se respalda la base de datos de usuarios y la configuración de Jellyfin, lo que asegura que la plataforma pueda recuperarse rápidamente ante cualquier fallo.
+Protegemos los datos del sistema mediante **backups automáticos** programados. Cada madrugada se respalda la base de datos de usuarios y la configuración de Jellyfin, lo que asegura que la plataforma pueda recuperarse rápidamente ante cualquier fallo.
 
 ---
 
