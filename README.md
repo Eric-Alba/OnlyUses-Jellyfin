@@ -44,6 +44,24 @@ Para mantener el orden en este servidor, hemos dividido el proyecto en las sigui
 * **🛠️ [scripts](./scripts)**: Automatizaciones para backups diarios (05:00 AM) y mantenimiento del sistema.
 
 ---
+
+🔹 Diferencias clave respecto a Jellyfin estándar
+A diferencia de una instalación típica de Jellyfin, nuestro proyecto no se limita a servir contenido multimedia. Hemos optimizado la plataforma para ofrecer **mayor rendimiento, seguridad y gestión de usuarios**, además de integrar una comunidad organizada de películas, series y música. Mientras Jellyfin normalmente se usa solo como servidor multimedia, en nuestro proyecto se utiliza como **gestor central de contenido**, combinado con una base de datos ligera para clientes y un sistema de backups que garantiza resiliencia y continuidad del servicio.
+
+📦 Base de datos de clientes
+Utilizamos **SQLite** para almacenar la información de los usuarios y sus preferencias. Esto permite consultas rápidas, reduce el consumo de recursos y mantiene la administración de datos simple y eficiente, mejorando notablemente el rendimiento general del sistema.
+
+⚡ Rendimiento
+El sistema está optimizado para responder rápidamente a las consultas y mantener un servidor equilibrado incluso con múltiples usuarios. La separación de servicios y la estructura ligera permiten un acceso fluido al contenido multimedia sin saturar el servidor.
+
+🎬 Comunidad Multimedia
+El contenido se organiza en diferentes secciones: **películas, series y música**. Gracias a Jellyfin, cada categoría puede manejarse con metadatos, carátulas y descripciones, facilitando la navegación, la búsqueda y la exploración de la comunidad multimedia.
+
+💾 Seguridad y Resiliencia
+Protegemos los datos del sistema mediante **backups automáticos** programados. Cada noche se respalda la base de datos de usuarios y la configuración de Jellyfin, lo que asegura que la plataforma pueda recuperarse rápidamente ante cualquier fallo.
+
+---
+
 ## 🔒 Seguridad y Resiliencia
 
 Este proyecto no solo sirve contenido, también lo protege:
