@@ -1,31 +1,73 @@
 services:
+  # --- 1. BASE DE DATOS (Conectada a Adminer y a tu App) ---
   db:
     image: mariadb:latest
-    container_name: jellyfin-mariadb
+    container_name: ellyfin-mariadb
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root_password_segura
-      MYSQL_DATABASE: jellyfin_portal
-      MYSQL_USER: admin_user
-      MYSQL_PASSWORD: Naipeer1234
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: jellyfin_db
+      MYSQL_USER: jellyfin_user
+      MYSQL_PASSWORD: jellyfin_password
+    ports:
+      - "3306:3306"
     volumes:
-      - ./mysql_data:/var/lib/mysql
+      - /root/mysql_data:/var/lib/mysql
 
+  # --- 2. ADMINER (Para gestionar tus usuarios) ---
   adminer:
     image: adminer:latest
-    container_name: jellyfin-adminer
+    container_name: ellyfin-adminer
+    restart: always
     ports:
-      - 8080:8080
+      - "8080:8080"
 
+  # --- 3. TU APP ONLYUSES (FastAPI) ---
   app:
-    image: tiangolo/uvicorn-gunicorn-fastapi:python3.9
-    container_name: jellyfin-app
-    volumes:
-      - ./app:/app
+    build: ./app
+    container_name: ellyfin-app
+    restart: always
     ports:
-      - 8000:80
+      - "8000:80"
     depends_on:
       - db
-    environment:
-      - DATABASE_HOST=db
-    command: /bin/sh -c "pip install mariadb requests && /start.sh"
+
+  # --- 4. JELLYFIN (El Cine) ---
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    network_mode: host
+    volumes:
+      - /root/jellyfin/config:/config
+      - /root/jellyfin/cache:/cache
+      - /root/jellyfin/media:/data
+    restart: unless-stopped
+
+  # --- 5. JELLYSEERR (Peticiones) ---
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    network_mode: host
+    volumes:
+      - /root/jellyseerr/config:/app/config
+    restart: unless-stopped
+
+  # --- 6. RADARR (Películas) ---
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    network_mode: host
+    volumes:
+      - /root/radarr/config:/config
+      - /root/jellyfin/media/Peliculas:/movies
+    restart: unless-stopped
+
+  # --- 7. SONARR (Series) ---
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    network_mode: host
+    volumes:
+      - /root/sonarr/config:/config
+      - /root/jellyfin/media/Series:/tv
+    restart: unless-stopped
