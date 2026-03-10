@@ -1,0 +1,79 @@
+Para restaurar el sistema, no necesitas un "archivo" ejecutable como tal, sino seguir unos comandos específicos que desempaquetan esa "caja" que hemos creado.
+
+He preparado un archivo **README.md** con formato profesional para que lo puedas subir a tu **GitHub**. Este archivo explica paso a paso cómo recuperar todo el servidor si algún día se rompe.
+
+### 📄 Contenido para tu GitHub (`README.md`)
+
+Copia y pega esto en un archivo llamado `README.md` en tu repositorio:
+
+```markdown
+# 🛡️ ONLYUSES - Guía de Restauración de Emergencia
+
+Este repositorio contiene la infraestructura de **ONLYUSES**. En caso de fallo crítico del servidor o pérdida de datos, sigue estos pasos para restaurar el sistema usando los backups de Google Drive.
+
+## 🗄️ ¿Qué incluye el Backup?
+El archivo `ONLYUSES_FULL_XXXX.tar.gz` contiene:
+- **Base de Datos (MariaDB):** Usuarios y registros.
+- **Configuración de Jellyfin:** Metadatos, perfiles y progreso de visionado.
+- **Código App:** El portal de registro personalizado con animaciones.
+- **Servidores Arr:** Configuraciones de Radarr y Sonarr.
+
+---
+
+## 🚀 Pasos para la Restauración
+
+### 1. Preparar el entorno
+Asegúrate de estar en la carpeta raíz y de tener los contenedores parados para evitar conflictos:
+```bash
+cd /root
+docker compose down
+
+```
+
+### 2. Descargar el Backup desde Google Drive
+
+Usa rClone para bajar el último archivo disponible (cambia el nombre por el real):
+
+```bash
+rclone copy "drive-instituto:Backups_Server/NOMBRE_DEL_ARCHIVO.tar.gz" /root/
+
+```
+
+### 3. Extraer los datos
+
+Este comando extraerá todas las carpetas y sobrescribirá las actuales con los datos guardados:
+
+```bash
+tar -xzf NOMBRE_DEL_ARCHIVO.tar.gz -C /
+
+```
+
+*Nota: Usamos `-C /` porque el backup guarda las rutas completas desde /root/.*
+
+### 4. Reparar Permisos (Muy importante)
+
+Para que Docker pueda leer los archivos restaurados, asegúrate de que los permisos sean los correctos:
+
+```bash
+chmod -R 755 /root/jellyfin/config
+chmod -R 755 /root/mysql_data
+
+```
+
+### 5. Levantar el Servidor
+
+Una vez extraído todo, reinicia los contenedores:
+
+```bash
+docker compose up -d --build
+
+```
+
+### 6. Verificar Base de Datos
+
+Si los usuarios no pueden hacer login, refresca los permisos de la base de datos:
+
+```bash
+docker exec -it ellyfin-mariadb mariadb -u root -proot_password -e "FLUSH PRIVILEGES;"
+
+```
