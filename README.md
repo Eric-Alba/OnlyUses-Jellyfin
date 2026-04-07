@@ -133,6 +133,24 @@ Para lograr que Jellyfin corra en pocos recursos:
 
 ---
 
+## 📢 Comunidad de Testers en Telegram
+
+Hemos creado una comunidad en Telegram para todas las personas interesadas en probar **OnlyUses** antes de su lanzamiento oficial.
+
+En este grupo podréis:
+- Probar nuevas funcionalidades antes que nadie  
+- Reportar errores y problemas  
+- Enviar sugerencias y feedback  
+- Participar activamente en la mejora del proyecto  
+
+💡 Vuestra ayuda es clave para hacer que la plataforma sea más estable, segura y optimizada.
+
+👉 Únete aquí: [Enlace al grupo de Telegram]([https://t.me/tu_grupo](https://t.me/+H-79gczAQXwwMWY8))
+
+¡Os esperamos!
+
+---
+
 ## 👥 Mantenedores
 
 Mantenido con ❤️ por:
