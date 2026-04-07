@@ -145,7 +145,7 @@ En este grupo podréis:
 
 💡 Vuestra ayuda es clave para hacer que la plataforma sea más estable, segura y optimizada.
 
-👉 Únete aquí: [Enlace al grupo de Telegram]([https://t.me/tu_grupo](https://t.me/+H-79gczAQXwwMWY8))
+👉 Únete aquí: [Enlace al grupo de Telegram](https://t.me/tu_grupo)
 
 ¡Os esperamos!
 
